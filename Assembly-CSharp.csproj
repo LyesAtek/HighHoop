@@ -62,12 +62,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Builder\LevelBuilder.cs" />
     <Compile Include="Assets\Scripts\Controllers\Ball\BallMovingController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Ball\BallTranslateController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Ball\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
     <Compile Include="Assets\Scripts\Controllers\DestroyPlayerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Platform\JumpPlatformController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Platform\PlatformMoving.cs" />
+    <Compile Include="Assets\Scripts\Detroy\DestroyByContact.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\PlatformManager.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/Users/lyesatek/Documents/Sky Ball/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

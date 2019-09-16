@@ -15,28 +15,35 @@ public class BallMovingController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetMouseButton(0))
+       
+        if (Input.GetMouseButton(0) && GameManager.GetBallState() == GameManager.State.InGame)
         {
-           mousePosition=  GetWorldPositionOnPlane(Input.mousePosition, Camera.main.nearClipPlane);
-        
+            mousePosition.x = Input.mousePosition.x;
+            mousePosition.y = (Screen.height - Input.mousePosition.y);
+            mousePosition.z = 0f;
+            mousePosition =  GetWorldPositionOnPlane(Input.mousePosition,0);
             direction = (mousePosition - transform.position).normalized;
-            rb.velocity = new Vector2(direction.x * moveSpeed, 0);
+           // print("MousePosition x : " +mousePosition.x + " TransformPosition x : " + transform.position.x);
+            rb.velocity = new Vector2(direction.x * moveSpeed,0);
+           
         }
         else
         {
             rb.velocity = Vector2.zero;
         }
-        
+       
     }
 
     public Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z)
     {
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
-        Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, z));
+        Plane xy = new Plane(screenPosition.normalized, new Vector3(0, 0, z));
         float distance;
+        
         xy.Raycast(ray, out distance);
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
         return ray.GetPoint(distance);
     }
 }

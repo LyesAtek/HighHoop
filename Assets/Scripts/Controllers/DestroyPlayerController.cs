@@ -15,6 +15,6 @@ public class DestroyPlayerController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        //transform.position = new Vector3()
+        transform.position = new Vector3(transform.position.x, transform.position.y, player.transform.position.z + offset.z);
     }
 }
