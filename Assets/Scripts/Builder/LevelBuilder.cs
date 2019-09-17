@@ -26,7 +26,7 @@ public class LevelBuilder : MonoBehaviour
         buildLevel();
     }
 
-    void buildLevel()
+    public void buildLevel()
     {
         numberofPlatformsGenerated = 0;
         cleanWorld();
@@ -55,7 +55,7 @@ public class LevelBuilder : MonoBehaviour
     {
         if (platformCreated.Count > generatedPlatformsNumber + 2)
         {
-            Destroy(platformCreated[0]);
+            Destroy(platformCreated[0],1f);
             platformCreated.RemoveAt(0);
         }
     }

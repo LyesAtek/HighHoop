@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\Detroy\DestroyByTime.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Managers\PlatformManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/Users/lyesatek/Documents/Sky Ball/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-   public enum StateBall
+    private const float initialBallPositionInY = -0.2F;
+    public enum StateBall
     {
         IsFreezing,
         IsBouncing,
@@ -27,14 +28,11 @@ public class PlayerController : MonoBehaviour
     private Animator ballAnimator;
     private Animator jumpPlatformAnimator;
     private GameObject parent;
+    private LevelBuilder levelBuilder;
     // Start is called before the first frame update
     void Start()
     {
-        stateBall = StateBall.IsFreezing;
-        bounceParticleTag = bounceParticleSystem.tag;
-        parent = transform.parent.gameObject;
-        ballAnimator = GetComponent<Animator>();
-      
+        initializeParameter();
     }
 
     // Update is called once per frame
@@ -47,9 +45,20 @@ public class PlayerController : MonoBehaviour
                
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            play();
+            playGame();
         }
         
+    }
+
+
+    void initializeParameter()
+    {
+        levelBuilder = GameObject.Find("LevelBuilder").GetComponent<LevelBuilder>();
+        stateBall = StateBall.IsFreezing;
+        bounceParticleTag = bounceParticleSystem.tag;
+        parent = transform.parent.gameObject;
+        ballAnimator = GetComponent<Animator>();
+     
     }
 
     private void OnCollisionEnter(Collision Col)
@@ -57,11 +66,15 @@ public class PlayerController : MonoBehaviour
         
         if (Col.gameObject.tag == "Ground" && ballAnimator.GetBool("inGame"))
         {
-            grounded = true;
-            if (!checkIfParticleHasCreated(bounceParticleTag))
+            if (!grounded)
             {
-                Instantiate(bounceParticleSystem, transform.position, bounceParticleSystem.transform.rotation);
-                
+                grounded = true;
+            }
+           
+            if (!checkIfBallHasAlreadyBounced(bounceParticleTag))
+            {
+                createParticleBounce();
+                incrementScore();
             }
             ballAnimator.SetBool("isSuperJump", false);
 
@@ -71,11 +84,12 @@ public class PlayerController : MonoBehaviour
             jumpPlatformAnimator = Col.gameObject.GetComponent<Animator>();
             jumpPlatformAnimator.SetBool("isJump", true);
             ballAnimator.SetBool("isSuperJump", true);
-           
+            grounded = true;
+
         }
         if (Col.gameObject.tag == "Finish")
         {
-            reset();
+            resetGame();
         }
 
 
@@ -83,37 +97,50 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit(Collision Col)
     {
-        if (Col.gameObject.tag == "Ground")
+        if (Col.gameObject.tag == "Ground" || Col.gameObject.tag == "Jump")
         {
-            grounded = false;
+            if (grounded)
+            {
+                grounded = false;
+            }
+           
         }
 
 
     }
 
+    private void OnTriggerEnter(Collider Col)
+    {
+
+        if (Col.gameObject.tag == "CheckPoint")
+        {
+            callLevelBuilderForGeneratePlatform();
+        }
+    }
 
     void ballIsFalling()
     {
-        setStateBall(StateBall.IsFalling);
         ballAnimator.enabled = false;
         GameManager.SetBallState(GameManager.State.Dead);
     }
 
-    void reset()
+    void resetGame()
     {
-         ballAnimator.enabled = true;
+        levelBuilder.buildLevel();
+        setScore(0);
+        ballAnimator.enabled = true;
         ballAnimator.SetBool("inGame", false);
         parent.transform.position = Vector3.zero;
         transform.position = Vector3.zero;
     }
 
-    void play()
+    void playGame()
     {   
         GameManager.SetBallState(GameManager.State.InGame);
-        ballAnimator.SetBool("inGame", true);
+        ballAnimator.SetBool("inGame", true);   
     }
 
-    bool checkIfParticleHasCreated(string tagParticle)
+    bool checkIfBallHasAlreadyBounced(string tagParticle)
     {
         if (GameObject.FindGameObjectWithTag(tagParticle)){
             return true;
@@ -123,15 +150,12 @@ public class PlayerController : MonoBehaviour
 
     StateBall checkStateBall()
     {
-        if (GameManager.GetBallState() == GameManager.State.InGame && transform.position.y <= 0 && GetComponent<Rigidbody>().velocity.y < 0)
+        if (GameManager.GetBallState() == GameManager.State.InGame && transform.position.y <= initialBallPositionInY && GetComponent<Rigidbody>().velocity.y < 0)
         {
-            RaycastHit hit;
-            if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, rayDistance, layers) && !grounded)
+            if ( !grounded)
             {
                 setStateBall(StateBall.IsFalling);
-                return StateBall.IsFalling;
-              
-                //ballIsFalling();
+                return StateBall.IsFalling;   
             }
         }else if(GameManager.GetBallState() == GameManager.State.InGame && grounded)
         {
@@ -152,4 +176,25 @@ public class PlayerController : MonoBehaviour
         stateBall = value;
     }
 
+    void callLevelBuilderForGeneratePlatform()
+    {
+        levelBuilder.generatePlatform();
+        levelBuilder.cleanOutPlatforms();
+    }
+
+    void createParticleBounce()
+    {
+        Instantiate(bounceParticleSystem, transform.position, bounceParticleSystem.transform.rotation);
+    }
+
+    void incrementScore()
+    {
+        ScoreManager.IncrementPoint();
+        print(ScoreManager.GetPoint());
+    }
+
+    void setScore(int value)
+    {
+        ScoreManager.SetPoint(value);
+    }
 }
