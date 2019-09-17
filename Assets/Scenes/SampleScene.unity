@@ -533,8 +533,8 @@ GameObject:
   - component: {fileID: 1697257831}
   - component: {fileID: 1697257830}
   - component: {fileID: 1697257834}
-  - component: {fileID: 1697257835}
   - component: {fileID: 1697257829}
+  - component: {fileID: 1697257835}
   m_Layer: 0
   m_Name: DefaultBall
   m_TagString: Finish
@@ -647,6 +647,8 @@ MonoBehaviour:
   layers:
     serializedVersion: 2
     m_Bits: 256
+  bounceParticleSystem: {fileID: 5658729526750055158, guid: a2846a128093a43d39dec369b9e7363f,
+    type: 3}
 --- !u!95 &1697257835
 Animator:
   serializedVersion: 3
@@ -755,7 +757,7 @@ PrefabInstance:
     - target: {fileID: 1525579867074534845, guid: 27001a6de9d354896add968211bb4817,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1525579867074534846, guid: 27001a6de9d354896add968211bb4817,
         type: 3}

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BallTranslateController : MonoBehaviour
 {
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -18,4 +19,6 @@ public class BallTranslateController : MonoBehaviour
             transform.Translate(Vector3.forward * Time.deltaTime * 12f);
         }
     }
+
+    
 }

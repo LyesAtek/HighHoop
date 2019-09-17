@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\Controllers\Platform\JumpPlatformController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Platform\PlatformMoving.cs" />
     <Compile Include="Assets\Scripts\Detroy\DestroyByContact.cs" />
+    <Compile Include="Assets\Scripts\Detroy\DestroyByTime.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Managers\PlatformManager.cs" />
     <Reference Include="Unity.Timeline.Editor">

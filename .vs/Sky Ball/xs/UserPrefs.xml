@@ -1,15 +1,8 @@
 ﻿<Properties StartupConfiguration="{EBDB3819-1F9B-9DFD-EEB2-B09F26C674FD}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Controllers/DestroyPlayerController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Detroy/DestroyByTime.cs">
     <Files>
-      <File FileName="Assets/Scripts/Controllers/Ball/PlayerController.cs" Line="26" Column="36" />
-      <File FileName="Assets/Scripts/Controllers/Ball/BallMovingController.cs" Line="28" Column="14" />
-      <File FileName="Assets/Scripts/Controllers/Platform/PlatformMoving.cs" Line="22" Column="12" />
-      <File FileName="Assets/Scripts/Managers/GameManager.cs" />
-      <File FileName="Assets/Scripts/Managers/PlatformManager.cs" />
-      <File FileName="Assets/Scripts/Builder/LevelBuilder.cs" Line="118" Column="6" />
-      <File FileName="Assets/Scripts/Controllers/Ball/BallTranslateController.cs" Line="18" Column="71" />
-      <File FileName="Assets/Scripts/Controllers/CameraController.cs" Line="18" Column="124" />
-      <File FileName="Assets/Scripts/Controllers/DestroyPlayerController.cs" Line="18" Column="42" />
+      <File FileName="Assets/Scripts/Controllers/Ball/PlayerController.cs" Line="105" Column="38" />
+      <File FileName="Assets/Scripts/Detroy/DestroyByTime.cs" Line="8" Column="26" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -21,9 +14,10 @@
                 <Node name="Controllers" expanded="True">
                   <Node name="Ball" expanded="True" />
                   <Node name="Platform" expanded="True" />
-                  <Node name="DestroyPlayerController.cs" selected="True" />
                 </Node>
-                <Node name="Detroy" expanded="True" />
+                <Node name="Detroy" expanded="True">
+                  <Node name="DestroyByTime.cs" selected="True" />
+                </Node>
                 <Node name="Managers" expanded="True" />
               </Node>
             </Node>
@@ -34,7 +28,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="66686367-4cb1-4b87-a1e6-4d10f6bd3956" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d71863d6-de2f-458e-9500-e9c480f139a7" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
