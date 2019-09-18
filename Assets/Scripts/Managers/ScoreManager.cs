@@ -6,12 +6,7 @@ public class ScoreManager : MonoBehaviour
 {
     private static int numberOfPoint = 0;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    
     public static int GetPoint()
     {
         return numberOfPoint;
@@ -25,5 +20,9 @@ public class ScoreManager : MonoBehaviour
     public static void IncrementPoint()
     {
         numberOfPoint++;
+    }
+    public static void AddToScore(int value)
+    {
+        numberOfPoint += value;
     }
 }

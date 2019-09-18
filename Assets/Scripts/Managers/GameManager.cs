@@ -5,10 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    public enum State
+    public  enum State
     {
         InGame,
-        Dead
+        LevelFinish,
+        IsIdle
     }
 
     private static State ballState;
@@ -25,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        SetBallState(GameManager.State.Dead);
+        SetBallState(GameManager.State.IsIdle);
     }
 
     // Update is called once per frame

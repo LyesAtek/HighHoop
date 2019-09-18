@@ -8,6 +8,12 @@ TagManager:
   - Jump
   - BounceParticle
   - CheckPoint
+  - Ring
+  - UnderRing
+  - LeftSideRing
+  - RightSideRing
+  - RighSideRing
+  - DestroyPlayer
   layers:
   - Default
   - TransparentFX

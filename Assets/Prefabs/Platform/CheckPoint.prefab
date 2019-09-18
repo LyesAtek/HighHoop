@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2781011920264656174}
   - component: {fileID: 261287448024431216}
   - component: {fileID: 6062077545030739399}
+  - component: {fileID: -7448150257398884475}
   m_Layer: 0
   m_Name: CheckPoint
   m_TagString: CheckPoint
@@ -92,3 +93,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-7448150257398884475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14871500125795325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb3bf3776c0a141fe9b58fad48ebc104, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

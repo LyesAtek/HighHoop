@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallTranslateController : MonoBehaviour
 {
-    
+    private bool isMoving;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,10 +14,7 @@ public class BallTranslateController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (GameManager.GetBallState() == GameManager.State.InGame)
-        {
-            transform.Translate(Vector3.forward * Time.deltaTime * 12f);
-        }
+       
     }
 
     
