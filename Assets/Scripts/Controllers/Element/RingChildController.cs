@@ -7,7 +7,7 @@ public class RingChildController : MonoBehaviour
     private GameObject parent;
     
     private bool hasTouchUnderRings = false;
-
+	private bool hasEnter = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,20 +18,24 @@ public class RingChildController : MonoBehaviour
     {
         if (Col.gameObject.tag == "Player")
         {
-            switch (gameObject.tag)
-            {
-                case "UnderRing":
-                    parent.GetComponent<RingController>().childTrigger(true,false);
-                    break;
-                case "LeftSideRing":
-                    parent.GetComponent<RingController>().childTrigger(false, true);
-                    break;
-                case "RightSideRing":
-                    parent.GetComponent<RingController>().childTrigger(false, false);
-                    break;
-                default:
-                    break;
-            } 
+			if (!hasEnter)
+			{
+				switch (gameObject.tag)
+				{
+					case "UnderRing":
+						parent.GetComponent<RingController>().childTrigger(true, false);
+						break;
+					case "LeftSideRing":
+						parent.GetComponent<RingController>().childTrigger(false, true);
+						break;
+					case "RightSideRing":
+						parent.GetComponent<RingController>().childTrigger(false, false);
+						break;
+					default:
+						break;
+				}
+				hasEnter = true;
+			}
         }
 
 

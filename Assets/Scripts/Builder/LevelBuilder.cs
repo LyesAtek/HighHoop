@@ -95,7 +95,7 @@ public class LevelBuilder : MonoBehaviour
         GameObject platform;
         numberofPlatformsGenerated++;
        
-        if (ScoreManager.GetPoint() >= LevelManager.GetTargetScore())
+        if (ScoreManager.GetScore() >= LevelManager.GetTargetScore())
         {
             platform = finishPlatform;
             stopBuilding = true;

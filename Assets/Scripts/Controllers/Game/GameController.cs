@@ -10,7 +10,6 @@ public class GameController : MonoBehaviour
     private BallMovingController ballMovingController;
 	private int additionalScore = 0;
     private bool isEndLevel = false;
-
 	void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
@@ -21,14 +20,23 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) )
         {
-            startGame();
+            if (isEndLevel)
+            {
+                uiController.setMainPanelEnable(true);
+                setIsEndLevel(false);
+            }
+            else
+            {
+                startGame();
+            }
+           
         }
         
     }
 
-    #region Game
+    #region Methodes Game
     public void resetGame()
     {
         resetParametersGame();
@@ -37,18 +45,24 @@ public class GameController : MonoBehaviour
 
     public void startGame()
     {
-        uiController.setMainPanelEnable(false);
+        setIsEndLevel(false);
         ballMovingController.setIsMoving(true);
         playerController.setBallAnimator(true);
         playerController.play();
+        uiController.setOnGamePanelEnable(true);
+        uiController.setMaxValueSliderScore(LevelManager.GetTargetScore());
+        uiController.SetTargerScore(LevelManager.GetTargetScore());
     }
 
     public void nextLevel()
     {
         resetParametersGame();
-        LevelManager.NextLevel();
-        uiController.setLevelText(LevelManager.GetLevelNumber());
 
+        
+        LevelManager.NextLevel();
+        uiController.setLevelCompletedPanelEnable(true);
+        uiController.setLevelText(LevelManager.GetLevelNumber());
+        uiController.setLevelCompletedText(LevelManager.GetLevelNumber());
     }
 
     public void buildNewPlatform()
@@ -57,26 +71,53 @@ public class GameController : MonoBehaviour
         levelBuilder.cleanOutPlatforms();
     }
 
+  
     private void resetParametersGame()
     {
-        setIsEndLevel(false);
+        
         ballMovingController.setIsMoving(false);
         uiController.setMainPanelEnable(true);
         setScore(0);
+        resetAdditionalScore();
         levelBuilder.buildLevel();
         playerController.resetPosition();
     }
+
     #endregion
 
-    #region Scores
-    public void incrementScore() => ScoreManager.IncrementPoint();//        print(ScoreManager.GetPoint());
-    public void addToScore(int value) => ScoreManager.AddToScore(value);
-    public void setScore(int value) => ScoreManager.SetPoint(value);
-    public void incrementAdditionalScore() => additionalScore += 1;
-    public void resetAdditionalScore() => additionalScore = 0;
+    #region Methodes Scores
+    public void incrementScore() {
+        ScoreManager.IncrementScore();
+        uiController.SetCurrentScore(ScoreManager.GetScore());
+        uiController.setCurrentValueSliderScore(ScoreManager.GetScore());
+      
+    }
+
+
+    public void addToScore()
+    {
+        ScoreManager.AddToScore(additionalScore);
+        uiController.SetCurrentScore(ScoreManager.GetScore());
+        uiController.setCurrentValueSliderScore(ScoreManager.GetScore());
+    }
+    public void setScore(int value)
+    {
+
+        ScoreManager.SetScore(value);
+    }
+    public void incrementAdditionalScore()
+    {
+        additionalScore += 1;
+        
+
+    }
+    public void resetAdditionalScore()
+    {
+        additionalScore = 0;
+    }
     #endregion
 
-    #region BallMoving
+    #region Methodes BallMoving
     public void setIsEndLevel(bool value)
     {
         isEndLevel = value;

@@ -5,18 +5,27 @@ using UnityEngine;
 public class PlatformController : MonoBehaviour
 {
     private GameController gameController;
+	private bool hasTouch;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         gameController = FindObjectOfType<GameController>();
     }
 
     private void OnCollisionEnter(Collision Col)
     {
+       // print(gameController.getIfBallHasAlreadyBounce());
         if (Col.gameObject.tag == "Player")
         {
-            gameController.incrementScore();
-        }
+            
+			if (!hasTouch)
+			{
+                
+				gameController.incrementScore();
+                hasTouch = true;
+            }
+		
+		}
     }
 
 }

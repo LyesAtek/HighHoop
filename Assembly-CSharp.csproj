@@ -67,11 +67,11 @@
     <Compile Include="Assets\Scripts\Controllers\Ball\BallTranslateController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Ball\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Element\DestroyPlayerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Element\CheckPointController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Element\DestroyPlayerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Element\EndLevelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Element\JumpController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Element\PlatformController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Element\PlatformJumpController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Element\RingChildController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Element\RingController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Game\GameController.cs" />
@@ -84,6 +84,8 @@
     <Compile Include="Assets\Scripts\Managers\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Managers\PlatformManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
+    <None Include="Assets\Utils\Font\secret_code\secrcode.txt" />
+    <None Include="Assets\Utils\Font\secret_code\license.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/Users/lyesatek/Documents/Sky Ball/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

@@ -36,10 +36,13 @@ public class RingController : MonoBehaviour
 
     public void childTrigger(bool contactWithUnderRing, bool leftContact)
     {
+    
         if (contactWithUnderRing)
         {
             hasContactWithUnderRing = contactWithUnderRing;
             gameController.incrementAdditionalScore();
+            gameController.addToScore();
+           
         }
         if(!hasContactWithUnderRing)
         {

@@ -10,14 +10,15 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private ParticleSystem bounceParticleSystem;
-    private bool particleHasCreated = false;
+    private bool isCreatedParticle = false;
     private bool grounded = false;
     private string bounceParticleTag;
     private Animator ballAnimator;
     private Animator jumpPlatformAnimator;
     private GameObject parent;
     private CameraController cameraController;
-
+    private int countNumberOfRowsJump = 0;
+    
     public enum StateBall
     {
         isMove,
@@ -31,8 +32,11 @@ public class PlayerController : MonoBehaviour
 
     public void setStateBall(StateBall state) => stateBall = state;
 
-#endregion
+    #endregion
 
+    #region Getter IsCreatedparticle
+    public bool getIsCreatedParticle() => isCreatedParticle;
+    #endregion
 
     private void Start()
     {
@@ -50,6 +54,11 @@ public class PlayerController : MonoBehaviour
 
 
         }
+    }
+
+    public void onBallFlying()
+    {
+        ScoreManager.SetPlatformHasBeenTouched(false);
     }
 
     public void setBallAnimator(bool value)
@@ -96,7 +105,6 @@ public class PlayerController : MonoBehaviour
      
     }
 
-   
 
     private bool checkIfBallHasAlreadyBounced(string tagParticle)
     {
@@ -108,6 +116,7 @@ public class PlayerController : MonoBehaviour
 
     private void createParticleBounce()
     {
+       
         Instantiate(bounceParticleSystem, transform.position, bounceParticleSystem.transform.rotation);
     }
 
@@ -129,45 +138,62 @@ public class PlayerController : MonoBehaviour
     #region Ball Collision
     private void OnCollisionEnter(Collision Col)
     {
-        if (!checkIfBallHasAlreadyBounced(bounceParticleTag))
-        {
             if (Col.gameObject.tag == "Ground" && ballAnimator.GetBool("inGame"))
             {
+                countNumberOfRowsJump = 0;
                 setBallAnimationParameter("isSuperJump", false);
-                setCameraControllerParameter();
+                setBallAnimationParameter("isJump", false);
 
-                if (!grounded)
+                setCameraControllerParameter();
+               
+                if (grounded == false)
                 {
                     grounded = true;
                     
                 }
-
+                
                 if (!checkIfBallHasAlreadyBounced(bounceParticleTag))
                 {
+                    isCreatedParticle = true;
                     createParticleBounce();
+                }
+                else
+                {
+                    isCreatedParticle = false;
                 }
             }
 
             if (Col.gameObject.tag == "Jump")
             {
                 launchJumpAnimator(Col.gameObject);
+                countNumberOfRowsJump++;
+            if (countNumberOfRowsJump <= 1)
+            {
+                setBallAnimationParameter("isJump", true);
+            }
+            else
+            {
                 setBallAnimationParameter("isSuperJump", true);
+            }
                 setCameraControllerParameter();
-                if (!grounded)
+           
+                if (grounded == false)
                 {
+                   
                     grounded = true;
                 }
             }
 
-        }
+        
     }
 
     private void OnCollisionExit(Collision Col)
     {
         if (Col.gameObject.tag == "Ground" || Col.gameObject.tag == "Jump")
         {
-            if (grounded)
+            if (grounded == true)
             {
+               
                 grounded = false;
             }
 
