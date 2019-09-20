@@ -7,6 +7,8 @@ public class LevelBuilder : MonoBehaviour
     [SerializeField]
     private GameObject[] platforms;
     [SerializeField]
+    private GameObject[] platformsRoll;
+    [SerializeField]
     private GameObject finishPlatform;
     public List<GameObject> platformCreated = new List<GameObject>();
     public int numberofPlatformsGenerated = 0;
@@ -15,8 +17,13 @@ public class LevelBuilder : MonoBehaviour
     private int currentPlatformIndex = 0;
     private List<int> paternsArray;
     private bool stopBuilding = false;
+    private int numberOfPlatformsRollGenerated;
+    private bool isRollMode = false;
+    private const int numberMaxOfPlatformsRoll = 6;
     private const float firstZOffset = 18f;
     private const float offsetPlatform = 6f;
+    private const float offsetAfterJump = 10f;
+    private const float offsetPlatformRoll = 2f;
     private const float yPosition = -7.9f;
     private const float xPosition = 0f;
     private const float zPosition = 0f;
@@ -30,6 +37,7 @@ public class LevelBuilder : MonoBehaviour
     {
         stopBuilding = false;
         numberofPlatformsGenerated = 0;
+        numberOfPlatformsRollGenerated = 0;
         cleanWorld();
        
         initializePaterns();
@@ -66,7 +74,14 @@ public class LevelBuilder : MonoBehaviour
     int getRandomPlatformIndex()
     {
         int index;
-        index = Random.Range(1, platforms.Length);
+        index = Random.Range(1, platforms.Length - 1);
+        return index;
+    }
+
+    int getRandomPlatformRollIndex()
+    {
+        int index;
+        index = Random.Range(1, platformsRoll.Length - 1);
         return index;
     }
 
@@ -79,22 +94,36 @@ public class LevelBuilder : MonoBehaviour
         }
     }
 
-    void createNewPlatform(int index)
+    void createNewPlatform(int index,GameObject[] platformsTab)
     {
 
         GameObject lastPlatform = getLastPlatform();
         float lastPlatformZPosition = lastPlatform.transform.GetChild(lastPlatform.transform.childCount -1).transform.localPosition.z;
-        float z = lastPlatform.transform.position.z + lastPlatformZPosition + offsetPlatform;
+        float z;
+        if (lastPlatform.tag == "SpecialGround" && numberOfPlatformsRollGenerated > 0  && numberOfPlatformsRollGenerated <= numberMaxOfPlatformsRoll)
+        {
+             z = lastPlatform.transform.position.z + lastPlatformZPosition + offsetPlatformRoll;
+        }else if (lastPlatform.tag == "SpecialGround" && numberOfPlatformsRollGenerated > numberMaxOfPlatformsRoll)
+        {
+            z = lastPlatform.transform.position.z + lastPlatformZPosition + offsetAfterJump;
+        }
+        else
+        {
+             z = lastPlatform.transform.position.z + lastPlatformZPosition + offsetPlatform;
+        }
+      
      
         Vector3 platformPosition = new Vector3(xPosition, yPosition, z);
-        newPlatform(index, platformPosition);
+        newPlatform(index, platformPosition,platformsTab);
     }
 
-    void newPlatform(int index,Vector3 position)
+   
+
+
+
+    void newPlatform(int index,Vector3 position, GameObject[] platformsTab)
     {
         GameObject platform;
-        numberofPlatformsGenerated++;
-       
         if (ScoreManager.GetScore() >= LevelManager.GetTargetScore())
         {
             platform = finishPlatform;
@@ -102,9 +131,8 @@ public class LevelBuilder : MonoBehaviour
         }
         else
         {
-            platform = platforms[index];
+            platform = platformsTab[index];
         }
-       
         GameObject newPlatformCreated = Instantiate(platform, position,platform.transform.rotation) as GameObject;
         platformCreated.Add(newPlatformCreated);
     }
@@ -114,7 +142,7 @@ public class LevelBuilder : MonoBehaviour
         int index = 0;
         GameObject platform = platforms[index];
         Vector3 vector = new Vector3(xPosition, yPosition, zPosition);
-        newPlatform(index, vector);
+        newPlatform(index, vector,platforms);
     }
 
     void generateSecondPlatform()
@@ -122,7 +150,7 @@ public class LevelBuilder : MonoBehaviour
         int index = getRandomPlatformIndex();
         GameObject platform = platforms[index];
         Vector3 vector = new Vector3(xPosition, yPosition, firstZOffset);
-        newPlatform(index, vector);
+        newPlatform(index, vector,platforms);
     }
 
     public void generatePlatform()
@@ -134,8 +162,30 @@ public class LevelBuilder : MonoBehaviour
                 currentPaternIndex = getPaternIndex();
                 currentPlatformIndex = 0;
             }
+            
+            if(ScoreManager.GetScore() >= 10 && numberOfPlatformsRollGenerated == 0 && !isRollMode)
+            {
+                isRollMode = true;
+            }
+            if(numberOfPlatformsRollGenerated > numberMaxOfPlatformsRoll)
+            {
+                isRollMode = false;
+            }
 
-            createNewPlatform(getRandomPlatformIndex());
+            if (!isRollMode)
+            {
+                createNewPlatform(getRandomPlatformIndex(),platforms);
+            } else { 
+                if(numberOfPlatformsRollGenerated < numberMaxOfPlatformsRoll)
+                {
+                    createNewPlatform(getRandomPlatformRollIndex(), platformsRoll);
+                }else if(numberOfPlatformsRollGenerated == numberMaxOfPlatformsRoll)
+                {
+                    createNewPlatform(platformsRoll.Length-1, platformsRoll);
+                }
+                 
+                 numberOfPlatformsRollGenerated++;
+            }
             currentPlatformIndex++;
         }
     }

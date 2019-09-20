@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) )
+        if (Input.GetMouseButtonDown(0))
         {
             if (isEndLevel)
             {
@@ -71,7 +71,7 @@ public class GameController : MonoBehaviour
         levelBuilder.cleanOutPlatforms();
     }
 
-  
+    //public void 
     private void resetParametersGame()
     {
         
@@ -82,6 +82,8 @@ public class GameController : MonoBehaviour
         levelBuilder.buildLevel();
         playerController.resetPosition();
     }
+
+
 
     #endregion
 

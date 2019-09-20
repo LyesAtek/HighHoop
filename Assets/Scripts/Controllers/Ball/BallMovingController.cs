@@ -7,11 +7,14 @@ public class BallMovingController : MonoBehaviour
     private Vector3 mousePosition;
     private Rigidbody rb;
     private Vector2 direction;
-    private float moveSpeed = 120f;
+    private float moveSpeed = 10f;
     private CameraController cameraController;
     private Transform childTransform;
     private bool isMoving = false;
     private bool isEndLevel = false;
+    private bool isAccelerometerMode = false;
+    private Vector2 startPos;
+    private bool directionChosen;
     void Start()
     {
         cameraController = Camera.main.GetComponent<CameraController>();
@@ -31,30 +34,44 @@ public class BallMovingController : MonoBehaviour
 
     void FixedUpdate()
     {
-
         if (isMoving && !isEndLevel)
         {
             transform.Translate(Vector3.forward * Time.deltaTime * 12f);
-            if (Input.GetMouseButton(0))
+            /*  if (Input.GetMouseButton(0))
+              {
+                      if (Input.GetAxis("Mouse X") > 0f || Input.GetAxis("Mouse X") < 0)
+                      {
+                          Vector3 movement = new Vector3(Input.GetAxis("Mouse X") * moveSpeed, 0.0f, 0.0f);
+                          rb.velocity = movement;
+                         // rb.AddForce(movement * moveSpeed, ForceMode.Acceleration);
+                      }
+                      else 
+                      {
+                          rb.velocity = Vector3.zero;
+                      }
+
+              }*/
+            if (Input.GetMouseButton(0) || GamePlayManager.GetISAccelerometerMode())
             {
-                if (Input.GetMouseButton(0))
+                if (GamePlayManager.GetISAccelerometerMode())
                 {
-                    if (Input.GetAxis("Mouse X") > 0f || Input.GetAxis("Mouse X") < 0)
+                    Vector3 movement = new Vector3(Input.acceleration.x * moveSpeed, 0.0f, 0.0f);
+                    rb.velocity = movement;
+                }
+                else
+                {
+                    Touch touch = Input.GetTouch(0);
+                    if (touch.phase == TouchPhase.Moved)
                     {
-                        Vector3 movement = new Vector3(Input.GetAxis("Mouse X") * moveSpeed, 0.0f, 0.0f);
+                        Vector3 movement = new Vector3(touch.deltaPosition.x, 0.0f, 0.0f);
                         rb.velocity = movement;
-                       // rb.AddForce(movement * moveSpeed, ForceMode.Acceleration);
                     }
-                    else 
+                    else if (touch.phase == TouchPhase.Stationary)
                     {
                         rb.velocity = Vector3.zero;
                     }
                 }
-
-            }
-            else
-            {
-                rb.velocity = Vector3.zero;
+                
             }
 
         } else if (isMoving && isEndLevel)
@@ -83,7 +100,7 @@ public class BallMovingController : MonoBehaviour
     void moveHorizontal()
     {
          direction = (mousePosition - transform.position).normalized;
-         rb.velocity = new Vector2(direction.x * moveSpeed, 0);
+         rb.velocity = new Vector2(direction.x * 120f, 0);
         
     
     }

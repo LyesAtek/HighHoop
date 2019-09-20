@@ -14,6 +14,7 @@ TagManager:
   - RightSideRing
   - RighSideRing
   - DestroyPlayer
+  - SpecialGround
   layers:
   - Default
   - TransparentFX

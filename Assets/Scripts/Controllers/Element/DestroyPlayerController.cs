@@ -25,7 +25,6 @@ public class DestroyPlayerController : MonoBehaviour
     {
         if (Col.gameObject.tag == "Player")
         {
-            print("destroyCollision");
             StartCoroutine(WaitForResetLevel(2f));
         }
     }

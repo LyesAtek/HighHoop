@@ -1,14 +1,15 @@
 ﻿<Properties StartupConfiguration="{EBDB3819-1F9B-9DFD-EEB2-B09F26C674FD}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Controllers/Element/JumpController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Controllers/Ball/PlayerController.cs">
     <Files>
-      <File FileName="Assets/Scripts/Controllers/UI/UIController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Controllers/Game/GameController.cs" Line="63" Column="57" />
-      <File FileName="Assets/Scripts/Controllers/Element/EndLevelController.cs" Line="30" Column="33" />
-      <File FileName="Assets/Scripts/Controllers/Ball/BallMovingController.cs" Line="86" Column="47" />
-      <File FileName="Assets/Scripts/Managers/ScoreManager.cs" Line="24" Column="42" />
-      <File FileName="Assets/Scripts/Managers/LevelManager.cs" Line="24" Column="26" />
-      <File FileName="Assets/Scripts/Controllers/Ball/PlayerController.cs" Line="144" Column="17" />
-      <File FileName="Assets/Scripts/Controllers/Element/JumpController.cs" Line="7" Column="31" />
+      <File FileName="Assets/Scripts/Managers/ScoreManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Builder/LevelBuilder.cs" />
+      <File FileName="Assets/Scripts/Managers/LevelManager.cs" />
+      <File FileName="Assets/Scripts/Controllers/Element/DestroyPlayerController.cs" />
+      <File FileName="Assets/Scripts/Controllers/Element/PlatformController.cs" />
+      <File FileName="Assets/Scripts/Controllers/Ball/BallMovingController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Controllers/Game/GameController.cs" Line="74" Column="7" />
+      <File FileName="Assets/Scripts/Controllers/Ball/PlayerController.cs" Line="84" Column="36" />
+      <File FileName="Assets/Scripts/Managers/GamePlayManager.cs" Line="6" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,11 +19,12 @@
               <Node name="Scripts" expanded="True">
                 <Node name="Builder" expanded="True" />
                 <Node name="Controllers" expanded="True">
-                  <Node name="Ball" expanded="True" />
-                  <Node name="Element" expanded="True">
-                    <Node name="JumpController.cs" selected="True" />
+                  <Node name="Ball" expanded="True">
+                    <Node name="PlayerController.cs" selected="True" />
                   </Node>
+                  <Node name="Element" expanded="True" />
                   <Node name="Game" expanded="True" />
+                  <Node name="Platform" expanded="True" />
                   <Node name="UI" expanded="True" />
                 </Node>
                 <Node name="Managers" expanded="True" />
@@ -35,7 +37,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ec1e3626-72a1-4fcb-bb5b-2e7d76d928b7" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b73ac8ed-2219-4248-89aa-b232b807fdc5" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
