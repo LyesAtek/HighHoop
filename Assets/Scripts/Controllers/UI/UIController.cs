@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
+    public static UIController instance;
     #region Parameters Main Panel
     [SerializeField]
     private  GameObject mainPanel;
     [SerializeField]
     private Text levelText;
+    [SerializeField]
+    private Text diamondsText;
     #endregion
 
     #region Parameters OnGame Panel
@@ -20,6 +23,8 @@ public class UIController : MonoBehaviour
     private Text targetScoreText;
     [SerializeField]
     private Slider sliderScore;
+    [SerializeField]
+    private GameObject tutorial;
     #endregion
 
     #region Parameters LevelCompleted Panel
@@ -31,8 +36,12 @@ public class UIController : MonoBehaviour
 
     //private  bool mainPanelIsVisible = false;
 
-    private void Start()
+    private void Awake()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
         setMainPanelEnable(true);
     }
 
@@ -49,6 +58,11 @@ public class UIController : MonoBehaviour
     {
         levelText.text = "Level " + levelNumber.ToString();
     }
+
+    public void setDiamondText(int diamondNumber)
+    {
+        diamondsText.text = diamondNumber.ToString();
+    }
     #endregion
 
     #region Methodes OnGame Panel
@@ -59,7 +73,7 @@ public class UIController : MonoBehaviour
         levelCompletedPanel.SetActive(!value);
     }
 
-
+  
     public void SetCurrentScore(int currentScore)
     {
         currentScoreText.text = currentScore.ToString();
@@ -80,9 +94,15 @@ public class UIController : MonoBehaviour
         sliderScore.value = currentScore;
     }
 
+    public void setVisibleTutorial(bool value)
+    {
+        tutorial.SetActive(value);
+    }
+
     #endregion
 
     #region Methodes LevelCompleted Panel
+
     public void setLevelCompletedPanelEnable(bool value)
     {
         mainPanel.SetActive(!value);

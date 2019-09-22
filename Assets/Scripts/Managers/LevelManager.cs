@@ -4,27 +4,35 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager instance ;
+    private  int targetScore = 100;
+    private  int levelNumber = 1;
 
-    private static int targetScore = 100;
-    private static int levelNumber = 1;
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
 
-    public static int GetTargetScore()
+    public int GetTargetScore()
     {
         return targetScore;
     }
 
-    public static int GetLevelNumber()
+    public int GetLevelNumber()
     {
         return levelNumber;
     }
 
-    public static void ResetParameters()
+    public void ResetParameters()
     {
         levelNumber = 1;
         targetScore = 100;
     }
 
-    public static void NextLevel()
+    public void NextLevel()
     {
         levelNumber += 1;
         targetScore += 5 ;

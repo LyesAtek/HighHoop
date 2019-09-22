@@ -19,7 +19,7 @@ public class LevelBuilder : MonoBehaviour
     private bool stopBuilding = false;
     private int numberOfPlatformsRollGenerated;
     private bool isRollMode = false;
-    private const int numberMaxOfPlatformsRoll = 6;
+    private const int numberMaxOfPlatformsRoll = 8;
     private const float firstZOffset = 18f;
     private const float offsetPlatform = 6f;
     private const float offsetAfterJump = 10f;
@@ -38,6 +38,7 @@ public class LevelBuilder : MonoBehaviour
         stopBuilding = false;
         numberofPlatformsGenerated = 0;
         numberOfPlatformsRollGenerated = 0;
+        isRollMode = false;
         cleanWorld();
        
         initializePaterns();
@@ -124,7 +125,7 @@ public class LevelBuilder : MonoBehaviour
     void newPlatform(int index,Vector3 position, GameObject[] platformsTab)
     {
         GameObject platform;
-        if (ScoreManager.GetScore() >= LevelManager.GetTargetScore())
+        if (ScoreManager.instance.GetScore() >= LevelManager.instance.GetTargetScore())
         {
             platform = finishPlatform;
             stopBuilding = true;
@@ -163,7 +164,7 @@ public class LevelBuilder : MonoBehaviour
                 currentPlatformIndex = 0;
             }
             
-            if(ScoreManager.GetScore() >= 10 && numberOfPlatformsRollGenerated == 0 && !isRollMode)
+            if(ScoreManager.instance.GetScore() >= 10 && numberOfPlatformsRollGenerated == 0 && !isRollMode)
             {
                 isRollMode = true;
             }

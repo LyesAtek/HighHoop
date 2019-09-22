@@ -14,11 +14,11 @@ GameObject:
   - component: {fileID: 1725054165139418171}
   - component: {fileID: 5396802048860029019}
   m_Layer: 8
-  m_Name: Platform
+  m_Name: Platform_Bounce
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5315046725371084811
 Transform:

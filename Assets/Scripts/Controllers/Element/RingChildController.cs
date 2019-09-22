@@ -6,7 +6,6 @@ public class RingChildController : MonoBehaviour
 {
     private GameObject parent;
     
-    private bool hasTouchUnderRings = false;
 	private bool hasEnter = false;
     // Start is called before the first frame update
     void Start()

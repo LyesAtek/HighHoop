@@ -1,15 +1,15 @@
 ﻿<Properties StartupConfiguration="{EBDB3819-1F9B-9DFD-EEB2-B09F26C674FD}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Controllers/Ball/PlayerController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Controllers/Element/RingChildController.cs">
     <Files>
-      <File FileName="Assets/Scripts/Managers/ScoreManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Builder/LevelBuilder.cs" />
-      <File FileName="Assets/Scripts/Managers/LevelManager.cs" />
-      <File FileName="Assets/Scripts/Controllers/Element/DestroyPlayerController.cs" />
-      <File FileName="Assets/Scripts/Controllers/Element/PlatformController.cs" />
-      <File FileName="Assets/Scripts/Controllers/Ball/BallMovingController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Controllers/Game/GameController.cs" Line="74" Column="7" />
-      <File FileName="Assets/Scripts/Controllers/Ball/PlayerController.cs" Line="84" Column="36" />
-      <File FileName="Assets/Scripts/Managers/GamePlayManager.cs" Line="6" Column="2" />
+      <File FileName="Assets/Scripts/Managers/LevelManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Controllers/Game/GameController.cs" Line="61" Column="93" />
+      <File FileName="Assets/Scripts/Controllers/Ball/PlayerController.cs" Line="150" Column="9" />
+      <File FileName="Assets/Scripts/Detroy/DestroyByTime.cs" />
+      <File FileName="Assets/Scripts/Detroy/DestroyPlayerController.cs" />
+      <File FileName="Assets/Scripts/Detroy/DestroyByContact.cs" />
+      <File FileName="Assets/Scripts/Controllers/Ball/BallMovingController.cs" Line="14" Column="37" />
+      <File FileName="Assets/Scripts/Controllers/UI/UIController.cs" Line="87" Column="28" />
+      <File FileName="Assets/Scripts/Controllers/Element/RingChildController.cs" Line="9" Column="18" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -19,15 +19,16 @@
               <Node name="Scripts" expanded="True">
                 <Node name="Builder" expanded="True" />
                 <Node name="Controllers" expanded="True">
-                  <Node name="Ball" expanded="True">
-                    <Node name="PlayerController.cs" selected="True" />
+                  <Node name="Ball" expanded="True" />
+                  <Node name="Element" expanded="True">
+                    <Node name="RingChildController.cs" selected="True" />
                   </Node>
-                  <Node name="Element" expanded="True" />
                   <Node name="Game" expanded="True" />
-                  <Node name="Platform" expanded="True" />
                   <Node name="UI" expanded="True" />
                 </Node>
+                <Node name="Detroy" expanded="True" />
                 <Node name="Managers" expanded="True" />
+                <Node name="Utilities" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -37,7 +38,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b73ac8ed-2219-4248-89aa-b232b807fdc5" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f17f076c-fa54-4525-95bb-0864566010dd" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

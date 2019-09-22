@@ -15,6 +15,7 @@ TagManager:
   - RighSideRing
   - DestroyPlayer
   - SpecialGround
+  - Ennemie
   layers:
   - Default
   - TransparentFX

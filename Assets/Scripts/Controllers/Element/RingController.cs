@@ -1,23 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class RingController : MonoBehaviour
 {
    [SerializeField]
     private float yAngle;
+    [SerializeField]
+    private GameObject particleSystem_1;
+    [SerializeField]
+    private GameObject particleSystem_2;
+    [SerializeField]
+    private GameObject textAdditionnalScore;
+
+    private TextMesh textMesh;
     private bool hasContactWithBall = false;
     private bool hasLeftContact = false;
     private bool hasContactWithUnderRing = false;
-	
-	private GameController gameController;
+    private bool hasContactWithSide = false;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        gameController = FindObjectOfType<GameController>();
+       // textMesh = textAdditionnalScore.GetComponent<TextMesh>();
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -37,17 +42,22 @@ public class RingController : MonoBehaviour
     public void childTrigger(bool contactWithUnderRing, bool leftContact)
     {
     
-        if (contactWithUnderRing)
+        if (contactWithUnderRing && !hasContactWithSide)
         {
             hasContactWithUnderRing = contactWithUnderRing;
-            gameController.incrementAdditionalScore();
-            gameController.addToScore();
-           
+            GameController.instance.incrementAdditionalScore();
+            GameController.instance.addToScore();
+            //textMesh.text = "+" + GameController.instance.getAdditionnalScore().ToString();
+            particleSystem_1.SetActive(true);
+            particleSystem_2.SetActive(true);
+           // textAdditionnalScore.SetActive(true);
+
         }
         if(!hasContactWithUnderRing)
         {
+            hasContactWithSide = true;
             rotateRing(leftContact);
-            gameController.resetAdditionalScore();
+            GameController.instance.resetAdditionalScore();
         }
 
     }

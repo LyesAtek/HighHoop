@@ -4,24 +4,32 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
+    public static ScoreManager instance;
     private static int numberOfPoint = 0;
     private static bool platformHasBeenTouched = false;
-    
-    public static int GetScore()
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
+    public int GetScore()
     {
         return numberOfPoint;
     }
 
-    public static void SetScore(int value)
+    public void SetScore(int value)
     {
         numberOfPoint = value;
     }
 
-    public static void IncrementScore()
+    public void IncrementScore()
     {
         if (!platformHasBeenTouched)
         {
-            if (ScoreManager.GetScore() < LevelManager.GetTargetScore())
+            if (GetScore() < LevelManager.instance.GetTargetScore())
             {
                 numberOfPoint++;
             }
@@ -29,11 +37,11 @@ public class ScoreManager : MonoBehaviour
         }
        
     }
-    public static void AddToScore(int value)
+    public void AddToScore(int value)
     {
-        if (numberOfPoint + value > LevelManager.GetTargetScore())
+        if (numberOfPoint + value > LevelManager.instance.GetTargetScore())
         {
-            numberOfPoint = LevelManager.GetTargetScore();
+            numberOfPoint = LevelManager.instance.GetTargetScore();
         }
         else
         {
@@ -41,7 +49,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public static void SetPlatformHasBeenTouched(bool value)
+    public void SetPlatformHasBeenTouched(bool value)
     {
         platformHasBeenTouched = value;
     }

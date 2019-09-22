@@ -12,9 +12,9 @@ public class BallMovingController : MonoBehaviour
     private Transform childTransform;
     private bool isMoving = false;
     private bool isEndLevel = false;
-    private bool isAccelerometerMode = false;
     private Vector2 startPos;
     private bool directionChosen;
+    private bool paused = false;
     void Start()
     {
         cameraController = Camera.main.GetComponent<CameraController>();
@@ -32,59 +32,63 @@ public class BallMovingController : MonoBehaviour
         isEndLevel = value;
     }
 
-    void FixedUpdate()
+    private void Update()
     {
-        if (isMoving && !isEndLevel)
-        {
-            transform.Translate(Vector3.forward * Time.deltaTime * 12f);
-            /*  if (Input.GetMouseButton(0))
-              {
-                      if (Input.GetAxis("Mouse X") > 0f || Input.GetAxis("Mouse X") < 0)
-                      {
-                          Vector3 movement = new Vector3(Input.GetAxis("Mouse X") * moveSpeed, 0.0f, 0.0f);
-                          rb.velocity = movement;
-                         // rb.AddForce(movement * moveSpeed, ForceMode.Acceleration);
-                      }
-                      else 
-                      {
-                          rb.velocity = Vector3.zero;
-                      }
-
-              }*/
-            if (Input.GetMouseButton(0) || GamePlayManager.GetISAccelerometerMode())
-            {
-                if (GamePlayManager.GetISAccelerometerMode())
-                {
-                    Vector3 movement = new Vector3(Input.acceleration.x * moveSpeed, 0.0f, 0.0f);
-                    rb.velocity = movement;
-                }
-                else
-                {
-                    Touch touch = Input.GetTouch(0);
-                    if (touch.phase == TouchPhase.Moved)
-                    {
-                        Vector3 movement = new Vector3(touch.deltaPosition.x, 0.0f, 0.0f);
-                        rb.velocity = movement;
-                    }
-                    else if (touch.phase == TouchPhase.Stationary)
-                    {
-                        rb.velocity = Vector3.zero;
-                    }
-                }
-                
-            }
-
-        } else if (isMoving && isEndLevel)
-        { 
-              transform.Translate(Vector3.forward * Time.deltaTime * 12f);
-              mousePosition = GetWorldPositionOnPlane(Vector3.zero, 0, 0);
-              moveHorizontal();
-        }else if (!isMoving)
-        {
-            rb.velocity = Vector3.zero;
-        }
-
+		if (!paused)
+		{
+			if (isMoving && !isEndLevel)
+			{
+				transform.Translate(Vector3.forward * Time.deltaTime * 12f);
+			}
+			else if (isMoving && isEndLevel)
+			{
+				transform.Translate(Vector3.forward * Time.deltaTime * 12f);
+			}
+		}
     }
+     void FixedUpdate()
+      {
+		if (!paused)
+		{
+			if (isMoving && !isEndLevel)
+			{
+				if (Input.GetMouseButton(0) || GamePlayManager.GetISAccelerometerMode())
+				{
+					if (GamePlayManager.GetISAccelerometerMode())
+					{
+						Vector3 movement = new Vector3(Input.acceleration.x * moveSpeed, 0.0f, 0.0f);
+						rb.velocity = movement;
+					}
+					else
+					{
+						Touch touch = Input.GetTouch(0);
+						if (touch.phase == TouchPhase.Moved)
+						{
+							Vector3 movement = new Vector3(touch.deltaPosition.x, 0.0f, 0.0f);
+							rb.velocity = movement;
+						}
+						else if (touch.phase == TouchPhase.Stationary)
+						{
+							rb.velocity = Vector3.zero;
+						}
+					}
+
+				}
+
+			}
+			else if (isMoving && isEndLevel)
+			{
+				// transform.Translate(Vector3.forward * Time.deltaTime * 10f);
+				mousePosition = GetWorldPositionOnPlane(Vector3.zero, 0, 0);
+				moveHorizontal();
+			}
+			else if (!isMoving || paused)
+			{
+				rb.velocity = Vector3.zero;
+			}
+		}
+     }
+    
    
     Vector3 GetWorldPositionOnPlane(Vector3 screenPosition,float y, float z)
     {
@@ -103,5 +107,19 @@ public class BallMovingController : MonoBehaviour
          rb.velocity = new Vector2(direction.x * 120f, 0);
         
     
+    }
+
+    public void setPaused(bool value)
+    {
+        paused = value;
+    }
+
+    public bool getPaused()
+    {
+        return paused;
+    }
+    public void resetVelocity()
+    {
+        rb.velocity = rb.velocity = Vector3.zero;
     }
 }

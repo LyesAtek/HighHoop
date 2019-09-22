@@ -4,65 +4,82 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public static GameController instance;
     private PlayerController playerController;
     private LevelBuilder levelBuilder;
-    private UIController uiController;
     private BallMovingController ballMovingController;
 	private int additionalScore = 0;
     private bool isEndLevel = false;
-	void Start()
+	private bool blockedUIEvent = false;
+	void Awake()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         playerController = FindObjectOfType<PlayerController>();
         levelBuilder = FindObjectOfType<LevelBuilder>();
-        uiController = FindObjectOfType<UIController>();
         ballMovingController = FindObjectOfType<BallMovingController>();
+        
     }
 
+    private void Start()
+    {
+        UIController.instance.setDiamondText(DiamondManager.instance.getNumberOfDiamonds());
+    }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+
+        if (Input.GetMouseButtonDown(0) && !blockedUIEvent)
         {
             if (isEndLevel)
             {
-                uiController.setMainPanelEnable(true);
+                UIController.instance.setMainPanelEnable(true);
                 setIsEndLevel(false);
+            }else if (checkPaused())
+            {
+                ballMovingController.setPaused(false);
+                setIsFirstTime();
             }
             else
             {
                 startGame();
             }
-           
-        }
-        
+        } 
     }
 
     #region Methodes Game
     public void resetGame()
     {
         resetParametersGame();
-        LevelManager.ResetParameters();
+        LevelManager.instance.ResetParameters();
+        UIController.instance.setLevelText(LevelManager.instance.GetLevelNumber());
+        UIController.instance.setLevelCompletedText(LevelManager.instance.GetLevelNumber());
     }
 
     public void startGame()
     {
+        playerController.play();
         setIsEndLevel(false);
         ballMovingController.setIsMoving(true);
-        playerController.setBallAnimator(true);
-        playerController.play();
-        uiController.setOnGamePanelEnable(true);
-        uiController.setMaxValueSliderScore(LevelManager.GetTargetScore());
-        uiController.SetTargerScore(LevelManager.GetTargetScore());
+        playerController.setEnableBallAnimator(true);
+        UIController.instance.setOnGamePanelEnable(true);
+        UIController.instance.setMaxValueSliderScore(LevelManager.instance.GetTargetScore());
+        UIController.instance.SetTargerScore(LevelManager.instance.GetTargetScore());
+
     }
 
     public void nextLevel()
     {
         resetParametersGame();
-
-        
-        LevelManager.NextLevel();
-        uiController.setLevelCompletedPanelEnable(true);
-        uiController.setLevelText(LevelManager.GetLevelNumber());
-        uiController.setLevelCompletedText(LevelManager.GetLevelNumber());
+        LevelManager.instance.NextLevel();
+        UIController.instance.setLevelText(LevelManager.instance.GetLevelNumber());
+        UIController.instance.setLevelCompletedText(LevelManager.instance.GetLevelNumber());
+        setBlockedUIEvent(false);
     }
 
     public void buildNewPlatform()
@@ -74,9 +91,9 @@ public class GameController : MonoBehaviour
     //public void 
     private void resetParametersGame()
     {
-        
+        UIController.instance.setMainPanelEnable(true);
+        ballMovingController.resetVelocity();
         ballMovingController.setIsMoving(false);
-        uiController.setMainPanelEnable(true);
         setScore(0);
         resetAdditionalScore();
         levelBuilder.buildLevel();
@@ -89,23 +106,23 @@ public class GameController : MonoBehaviour
 
     #region Methodes Scores
     public void incrementScore() {
-        ScoreManager.IncrementScore();
-        uiController.SetCurrentScore(ScoreManager.GetScore());
-        uiController.setCurrentValueSliderScore(ScoreManager.GetScore());
+        ScoreManager.instance.IncrementScore();
+        UIController.instance.SetCurrentScore(ScoreManager.instance.GetScore());
+        UIController.instance.setCurrentValueSliderScore(ScoreManager.instance.GetScore());
       
     }
 
 
     public void addToScore()
     {
-        ScoreManager.AddToScore(additionalScore);
-        uiController.SetCurrentScore(ScoreManager.GetScore());
-        uiController.setCurrentValueSliderScore(ScoreManager.GetScore());
+        ScoreManager.instance.AddToScore(additionalScore);
+        UIController.instance.SetCurrentScore(ScoreManager.instance.GetScore());
+        UIController.instance.setCurrentValueSliderScore(ScoreManager.instance.GetScore());
     }
     public void setScore(int value)
     {
 
-        ScoreManager.SetScore(value);
+        ScoreManager.instance.SetScore(value);
     }
     public void incrementAdditionalScore()
     {
@@ -117,6 +134,11 @@ public class GameController : MonoBehaviour
     {
         additionalScore = 0;
     }
+
+    public int getAdditionnalScore()
+    {
+        return additionalScore;
+    }
     #endregion
 
     #region Methodes BallMoving
@@ -124,15 +146,52 @@ public class GameController : MonoBehaviour
     {
         isEndLevel = value;
         ballMovingController.setIsEndLevel(value);
-
     }
-
+    
     public void setIsMoving(bool value) => ballMovingController.setIsMoving(value);
 
     #endregion
 
-   
+    #region Methodes Diamond
 
+    public void incrementNumberOfDiamond()
+    {
+        DiamondManager.instance.incrementNumberOfDiamonds();
+        UIController.instance.setDiamondText(DiamondManager.instance.getNumberOfDiamonds());
+    }
+    #endregion
 
+    #region Methode UI
+    public void setLevelCompletedPanel(bool value)
+    {
+        UIController.instance.setLevelCompletedPanelEnable(value);
+    }
 
+    public void setBlockedUIEvent(bool value)
+	{
+		blockedUIEvent = value;
+	}
+    #endregion
+
+    #region Methode Tutorial
+    public bool checkPaused()
+    {
+        return ballMovingController.getPaused();
+    }
+    public void tutorialEnable(bool value)
+    {
+        UIController.instance.setVisibleTutorial(value);
+        ballMovingController.setPaused(value);
+    }
+
+    public bool isFirstTime()
+    {
+        return TutorialManager.instance.getIsFirstGame();
+    }
+
+    public void setIsFirstTime()
+    {
+        TutorialManager.instance.setIsFirstTime();
+    }
+    #endregion
 }

@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class EndLevelController : MonoBehaviour
 {
-    private GameController gameController;
-    // Start is called before the first frame update
-    void Start()
-    {
-        gameController = FindObjectOfType<GameController>();
-    }
-
-
     private void OnTriggerEnter(Collider Col)
     {
         if (Col.gameObject.tag == "Player")
@@ -25,9 +17,11 @@ public class EndLevelController : MonoBehaviour
 
     IEnumerator WaitForNextLevel(float waitTime)
     {
-        gameController.setIsEndLevel(true);
+        GameController.instance.setIsEndLevel(true);
+        GameController.instance.setBlockedUIEvent(true);
+        GameController.instance.setLevelCompletedPanel(true);
         yield return new WaitForSeconds(waitTime);
-        gameController.nextLevel();
+        GameController.instance.nextLevel();
     }
 }
 
